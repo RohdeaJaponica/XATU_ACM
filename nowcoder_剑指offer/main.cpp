@@ -179,14 +179,38 @@ public:
 class Solution7 {
 public:
 	int Fibonacci(int n) {
-		
+		int i = 0;
+		int n_1 = 1; int n_2 = 0; int ret = 0;
+		if (n == 0) return n_2;
+		if (n == 1) return n_1;
+		for (i = 2; i <= n; i++)
+		{
+			ret = n_1 + n_2;
+			n_2 = n_1;
+			n_1 = ret;
+		}
+		return ret;
 	}
 };
+
+class Solution8 {
+public:
+	int jumpFloor(int number) {
+
+	}
+};
+
+void test8()
+{
+	Solution8 a;
+	a.jumpFloor(5);
+}
 
 void test7()
 {
 	Solution7 a;
-	cout << a.Fibonacci(5) << endl;
+	cout << a.Fibonacci(7) << endl;
+	//0 1 1 2 3 5 8 13
 }
 
 void test6()
@@ -243,8 +267,11 @@ void test1()
 	int tmp = a1.Find(4, test);
 	cout << tmp << endl;
 }
+
 int main()
 {
+	test8();
+	//test7();
 	//test6();
 	//test5();
 	//test4();
