@@ -176,6 +176,7 @@ public:
 	}
 };
 
+//斐波那契数列
 class Solution7 {
 public:
 	int Fibonacci(int n) {
@@ -193,17 +194,94 @@ public:
 	}
 };
 
+//青蛙跳台阶 可以跳一次或者两次
 class Solution8 {
 public:
 	int jumpFloor(int number) {
-
+		int n_2 = 0, n_1 = 1, n;
+		int i;
+		if (number == 0) return n_2;
+		for (i = 1; i <= number; i++)
+		{
+			n = n_2 + n_1;
+			n_2 = n_1;
+			n_1 = n;
+		}
+		return n;
 	}
 };
+
+//青蛙跳台阶 可以跳n次
+class Solution9
+{
+public:
+	int jumpFloorII(int number) {
+		int i;
+		int ret = 1;
+		for (i = 0; i < number-1; i++)
+		{
+			ret *= 2;
+		}
+		return ret;
+	}
+};
+
+//矩形覆盖
+class Solution10
+{
+public:
+	int rectCover(int number) {
+		int n_2 = 0, n_1 = 1, n;
+		int i;
+		if (number == 0)	return n_2;
+		if (number == 1) return n_1;
+		for (i = 0; i < number; i++)
+		{
+			n = n_1 + n_2;
+			n_2 = n_1;
+			n_1 = n;
+		}
+		return n;
+	}
+};
+
+//二进制中1的个数
+class Solution11
+{
+public:
+	int  NumberOf1(int n) {
+		int ret = 0;
+		while (n != 0)
+		{
+			if (n & 1 == 1) ++ret;
+			n = n >> 1;
+		}
+		return ret;
+	}
+};
+
+void test11()
+{
+	Solution11 a;
+	cout << a.NumberOf1(65535) << endl;
+}
+
+void test10()
+{
+	Solution10 a;
+	cout << a.rectCover(2) << endl;
+}
+
+void test9()
+{
+	Solution9 a;
+	cout << a.jumpFloorII(3) << endl;
+}
 
 void test8()
 {
 	Solution8 a;
-	a.jumpFloor(5);
+	cout << a.jumpFloor(1) << endl;
 }
 
 void test7()
@@ -270,7 +348,10 @@ void test1()
 
 int main()
 {
-	test8();
+	test11();
+	//test10();
+	//test9();
+	//test8();
 	//test7();
 	//test6();
 	//test5();
