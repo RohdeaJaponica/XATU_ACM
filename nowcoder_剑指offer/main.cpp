@@ -253,17 +253,40 @@ public:
 		int ret = 0;
 		while (n != 0)
 		{
-			if (n & 1 == 1) ++ret;
-			n = n >> 1;
+			n = n & (n - 1);
+			++ret;
 		}
 		return ret;
 	}
 };
 
+//数值的整数次方
+//要考虑exponent为负数
+class Solution12
+{
+public:
+	double Power(double base, int exponent) {
+		int i;
+		float ret = 1;
+		if (exponent == 0) return 1;
+		for (i = 0; i < exponent; i++)
+		{
+			ret *= base;
+		}
+		return ret;
+	}
+};
+
+void test12()
+{
+	Solution12 a;
+	cout << a.Power(2,3) << endl;
+}
+
 void test11()
 {
 	Solution11 a;
-	cout << a.NumberOf1(65535) << endl;
+	cout << a.NumberOf1(-65535) << endl;
 }
 
 void test10()
@@ -348,7 +371,8 @@ void test1()
 
 int main()
 {
-	test11();
+	test12();
+	//test11();
 	//test10();
 	//test9();
 	//test8();
