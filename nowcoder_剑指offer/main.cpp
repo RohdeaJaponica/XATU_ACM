@@ -2,6 +2,21 @@
 #include <vector>
 #include <stack>
 using namespace std;
+//Definition for LinkList
+struct ListNode {
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+		val(x), next(NULL) {
+	}
+}*pList;
+//Definition for binary tree
+struct TreeNode {
+	int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
 
 //二维数组中的查找
 class Solution1 {
@@ -48,13 +63,6 @@ public:
 	}
 };
 
-  struct ListNode {
-        int val;
-        struct ListNode *next;
-        ListNode(int x) :
-              val(x), next(NULL) {
-        }
-  }*pList;
 //从尾到头打印链表
 class Solution3 {
 public:
@@ -78,15 +86,7 @@ public:
 	}
 };
 
-//Definition for binary tree
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
 //重建二叉树
-//1 2 4 7 3 5 6 8
 class Solution4 {
 public:
 	TreeNode * reConstructBinaryTree(vector<int> pre, vector<int> vin) {
@@ -150,6 +150,8 @@ private:
 //我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 
 //例如数组{ 3,4,5,1,2 }为{ 1,2,3,4,5 }的一个旋转，该数组的最小值为1。 
 //NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+
+//旋转数组的最小数字
 class Solution6 {
 public:
 	int minNumberInRotateArray(vector<int> rotateArray) {
@@ -261,26 +263,134 @@ public:
 };
 
 //数值的整数次方
-//要考虑exponent为负数
 class Solution12
 {
 public:
 	double Power(double base, int exponent) {
 		int i;
-		float ret = 1;
-		if (exponent == 0) return 1;
-		for (i = 0; i < exponent; i++)
+		double ret = 1;
+
+		if (fabs(base-0) < 0.0000001)
+		{
+			if (exponent < 0)
+			{
+				exit(1);
+			}
+			return 0;
+		}
+		for (i = 0; i < abs(exponent); i++)
 		{
 			ret *= base;
 		}
+		if (exponent < 0)
+			return 1.0 / ret;
 		return ret;
 	}
 };
 
+//调整数组顺序使奇数位于偶数前面
+class Solution13 {
+public:
+	void reOrderArray(vector<int> &array) {
+		int left = 0;
+		int i = 0;
+		for (left = 0; left < array.size(); left++)
+		{
+			i = left;
+			if (array[left] % 2 != 0)
+			{
+				continue;
+			}
+			else
+			{
+				while (i < array.size())
+				{
+					if (array[i] % 2 == 0)
+						i++;
+					else					
+					{
+						while (i > left)
+						{
+							swap(array[i], array[i - 1]);
+							i--;
+						}
+						break;
+					}
+				}
+				if (i == array.size() - 1) return;
+			}
+		}
+		return;
+	}
+};
+
+//struct ListNode {
+//int val;
+//struct ListNode *next;
+//ListNode(int x) :
+//val(x), next(NULL) {}
+//};
+
+//链表中倒数第K个节点
+class Solution14 {
+public:
+	ListNode * FindKthToTail(ListNode* pListHead, unsigned int k) {
+		if (pListHead == NULL || k == 0) return NULL;
+		int len = 0;
+		ListNode *cur = pListHead;
+		while (cur != NULL)
+		{
+			++len;
+			cur = cur->next;
+		}
+		if (len < k) return NULL;
+		cur = pListHead;
+		for (int i = 0; i < len - k; i++)
+		{
+			cur = cur->next;
+		}
+		return cur;
+	}
+};
+
+class Solution15 {
+public:
+	ListNode * ReverseList(ListNode* pHead) {
+
+	}
+};
+
+void test15()
+{
+
+}
+
+void test14()
+{
+	Solution14 a;
+	ListNode *phead = new ListNode(1);
+	phead->next = new ListNode(2);
+	phead->next->next = new ListNode(3);
+	ListNode *ret = a.FindKthToTail(phead, 5);
+	if (ret != NULL)
+		cout << ret->val << endl;
+	else
+		cout << "NULL" << endl;
+}
+
+void test13()
+{
+	Solution13 a;
+	vector<int> b{ 1,2,3,4,5,6 };
+	a.reOrderArray(b);
+}
+
 void test12()
 {
 	Solution12 a;
-	cout << a.Power(2,3) << endl;
+	cout << a.Power(0, 0) << endl;
+	cout << a.Power(-2, -3) << endl;
+	cout << a.Power(2, -3) << endl;
 }
 
 void test11()
@@ -371,7 +481,9 @@ void test1()
 
 int main()
 {
-	test12();
+	//test14();
+	//test13();
+	//test12();
 	//test11();
 	//test10();
 	//test9();
