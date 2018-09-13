@@ -356,12 +356,31 @@ public:
 class Solution15 {
 public:
 	ListNode * ReverseList(ListNode* pHead) {
-
+		ListNode *reversed = NULL;
+		ListNode *cur = pHead;
+		while (pHead != NULL)
+		{
+			cur = pHead;
+			pHead = pHead->next;
+			cur->next = reversed;
+			reversed = cur;
+			
+		}
+		return reversed;
 	}
 };
 
 void test15()
 {
+	Solution15 a;
+	ListNode *p = new ListNode(1);
+	p->next = new ListNode(2);
+	p->next->next = new ListNode(3);
+	p->next->next->next = NULL;
+	p = a.ReverseList(p);
+	cout << p->val << endl;
+	cout << p->next->val << endl;
+	cout << p->next->next->val << endl;
 
 }
 
@@ -481,6 +500,7 @@ void test1()
 
 int main()
 {
+	test15();
 	//test14();
 	//test13();
 	//test12();
