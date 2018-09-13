@@ -353,6 +353,7 @@ public:
 	}
 };
 
+//逆置链表
 class Solution15 {
 public:
 	ListNode * ReverseList(ListNode* pHead) {
@@ -370,6 +371,67 @@ public:
 	}
 };
 
+//合并两个排序的链表
+class Solution16 {
+public:
+	ListNode * Merge(ListNode* pHead1, ListNode* pHead2)
+	{
+		ListNode *newList;
+		ListNode *newtail;
+		if (pHead1 == NULL) return pHead2;
+		if (pHead2 == NULL) return pHead1;
+		if ((*pHead1).val <= (*pHead2).val)
+		{
+			newList = pHead1;
+			pHead1 = pHead1->next;
+			newtail = newList;
+		}
+		else
+		{
+			newList = pHead2;
+			pHead2 = pHead2->next;
+			newtail = newList;
+		}
+
+		while (pHead1 != NULL && pHead2 != NULL)
+		{
+			if ((*pHead1).val <= (*pHead2).val)
+			{
+				newtail->next = pHead1;
+				pHead1 = pHead1->next;
+			}
+			else
+			{
+				newtail->next = pHead2;
+				pHead2 = pHead2->next;
+			}
+			newtail = newtail->next;
+		}
+		if (pHead1 == NULL) newtail->next = pHead2;
+		else if (pHead2 == NULL) newtail->next = pHead1;
+		return newList;
+	}
+};
+
+//树的子结构
+class Solution17 {
+public:
+	bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
+	{
+
+	}
+};
+
+void test17()
+{
+
+}
+
+void test16()
+{
+	//nowcoder直接通过
+}
+
 void test15()
 {
 	Solution15 a;
@@ -381,7 +443,6 @@ void test15()
 	cout << p->val << endl;
 	cout << p->next->val << endl;
 	cout << p->next->next->val << endl;
-
 }
 
 void test14()
