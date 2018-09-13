@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -86,9 +87,76 @@ void AsubB_big()
 	}
 }
 
+void wifi()
+{
+	char line[1000001];
+	memset(line, 0, 1000001);
+	// 循环读入多行数据
+	while (cin.getline(line, 1000000)) {
+		int A, B, k;
+		int company[2000] = { 0 };
+		double money = 0;
+		A = atoi(line);
+		int i = 0;
+		while (line[i] != ' ')
+			i++;
+		B = atoi(line + i);
+		while (line[i] != ';')
+			i++;
+		int j;
+		i++;
+		for (j = 0; line[i] != '\0'; j++)
+		{
+			company[j] = atoi(line + i);
+			while (line[i] != ' ')
+			{
+				if (line[i] == '\0') break;
+				i++;
+			}
+			i++;
+		}
+		sort(company, company + j);
+		j--;
+		i = j - 1;
+		while(i>=0)
+		{
+			
+			double tmp = (double)(company[j] - company[i]) / 2 * B;
+			if (tmp > A)
+			{
+				money += A;
+				j--;
+				i--;
+			}
+			else
+			{
+				double tmp2;
+				if (i - 1 >= 0)
+				{
+					 tmp2 = (company[j] - company[i - 1]) / 2 * B;
+					 if (tmp2 < A)
+						 i--;
+					 else
+					 {
+						 money += 20 + tmp2;
+						 i--; j--;
+					 }
+				}
+				else
+				{
+					money += 20 + tmp;
+					i--; j--;
+				}
+			}
+		}
+		printf("%.1f", money);
+	}
+}
+
 void test()
 {
-	AsubB_big();
+	wifi();
+	//AsubB_big();
 	//findSingleNum();
 	//aplusb();
 }
