@@ -531,9 +531,47 @@ private:
 class Solution21 {
 public:
 	bool IsPopOrder(vector<int> pushV, vector<int> popV) {
+		stack<int> s;
+		vector<int>::iterator itPush = pushV.begin();
+		vector<int>::iterator itPop = popV.begin();
+		for (; !popV.empty(); )
+		{
+			if (!pushV.empty() && *itPop == *itPush)
+			{
+				itPush = pushV.erase(itPush);
+				itPop = popV.erase(itPop);
+			}
+			else if(!s.empty() && *itPop == s.top())
+			{
+				itPop = popV.erase(itPop);
+				s.pop();
+			}
+			else if (pushV.size() != 0)
+			{
+				s.push(*itPush);
+				itPush = pushV.erase(itPush);
+			}
+			else break;
+		}
+		if (s.empty() && pushV.empty() && popV.empty()) return 1;
+		else return 0;
+	}
+};
+
+class Solution22 {
+public:
+	vector<int> PrintFromTopToBottom(TreeNode* root) {
 
 	}
 };
+
+void test21()
+{
+	Solution21 a;
+	
+	cout << a.IsPopOrder({ 1,2,3,4,5 }, { 4,3,5,1,2 }) << endl;
+
+}
 
 void test19()
 {
@@ -675,7 +713,8 @@ void test1()
 
 int main()
 {
-	test19();
+	test21();
+	//test19();
 	//test15();
 	//test14();
 	//test13();
