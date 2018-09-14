@@ -416,20 +416,99 @@ public:
 //树的子结构
 class Solution17 {
 public:
+	bool DoesTree1HaveTree2(TreeNode *pRoot1, TreeNode *pRoot2)
+	{
+		//若树2走到了叶子节点，说明之前的都相等。
+		if (pRoot2 == NULL) return true;
+		//若树2还没走到叶子节点而树1走到了叶子节点，说明不匹配。
+		if (pRoot1 == NULL) return false;
+		//若相应位置节点值不同，说明不匹配，否则继续递归判断。
+		if (pRoot1->val != pRoot2->val) return false;
+		//若左子树和右子树都匹配，则返回真。
+		return DoesTree1HaveTree2(pRoot1->left, pRoot2->left) 
+			&& DoesTree1HaveTree2(pRoot1->right, pRoot2->right);
+	}
 	bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
 	{
-
+		bool ret = false;
+		//首先判断是否为空
+		if (pRoot2 == NULL || pRoot1 == NULL) return ret;
+		//第一步，在树1中找树2的第一个节点，若找到，进入判断函数
+		if (pRoot1->val == pRoot2->val)
+		ret = DoesTree1HaveTree2(pRoot1, pRoot2);
+		//若不匹配，先左后右依次判断；
+		if (ret == false) 
+			ret = HasSubtree(pRoot1->left, pRoot2);
+		if (ret == false) 
+			ret = HasSubtree(pRoot1->right, pRoot2);
+		return ret;
 	}
 };
 
-void test17()
-{
+//二叉树的镜像
+class Solution18 {
+public:
+	void Mirror(TreeNode *pRoot) {
+		if (pRoot == NULL) return;
+		TreeNode *tmp = pRoot->left;
+		pRoot->left = pRoot->right;
+		pRoot->right = tmp;
+		if(pRoot->left != NULL)
+			Mirror(pRoot->left);
+		if(pRoot->right != NULL)
+			Mirror(pRoot->right);
+	}
+};
 
-}
+//顺时针打印矩阵
+class Solution19 {
+public:
+	vector<int> printMatrix(vector<vector<int> > matrix) {
+		int row = matrix.size(); int col= matrix[0].size();
+		vector<int> ret;
+		int circle_times = col < row ? col : row;
+		int j = 0, k = 0;
+		int rowbegin = 0, colbegin = 0;
+		int isEnd = 0;
+		for (int i = 0; i < (circle_times + 1) / 2; i++)
+		{
+			if (col - colbegin <= 1 || row - rowbegin <= 1) isEnd = 1;
+			//向右走
+			while (k < col)
+				ret.push_back(matrix[j][k++]);
+			//因为k多加了一次，因此要减掉；j已经输出过了，所以跳过
+			--k;++j;
+			//向下走
+			while (j < row)
+				ret.push_back(matrix[j++][k]);
+			--j;--k;
+			//向左走
+			while (k >= colbegin && isEnd != 1)
+				ret.push_back(matrix[j][k--]);
+			++k;--j;
+			//向上走
+			while (j > rowbegin && isEnd != 1)
+				ret.push_back(matrix[j--][k]);
+			
+			--col; --row; 
+			k = ++colbegin; 
+			j = ++rowbegin;
+		}
+		return ret;
+	}
+};
 
-void test16()
+void test19()
 {
-	//nowcoder直接通过
+	Solution19 a;
+	vector<vector<int>> matrix = { { 1,2,3,4 } };
+	vector<int> tmp = a.printMatrix(matrix);
+	for (int i = 0; i < tmp.size(); i++)
+	{
+		cout << tmp[i] << " ";
+	}
+
+
 }
 
 void test15()
@@ -561,7 +640,8 @@ void test1()
 
 int main()
 {
-	test15();
+	test19();
+	//test15();
 	//test14();
 	//test13();
 	//test12();
