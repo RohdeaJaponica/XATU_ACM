@@ -506,17 +506,26 @@ public:
 class Solution20 {
 public:
 	void push(int value) {
-
+		if (s.empty()) minNum.push(value);
+		s.push(value);
+		if (minNum.top() > value)
+			minNum.push(value);
 	}
 	void pop() {
+		if (minNum.top() == s.top())
+			minNum.pop();
+		s.pop();
 
 	}
 	int top() {
-
+		return s.top();
 	}
 	int min() {
-
+		return minNum.top();
 	}
+private:
+	stack<int> s;
+	stack<int> minNum;
 };
 
 void test19()
