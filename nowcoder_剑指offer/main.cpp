@@ -466,9 +466,13 @@ public:
 	vector<int> printMatrix(vector<vector<int> > matrix) {
 		int row = matrix.size(); int col= matrix[0].size();
 		vector<int> ret;
+		//有几圈，行和列按小的算
 		int circle_times = col < row ? col : row;
+		//j行,k列用来遍历
 		int j = 0, k = 0;
+		//rowbegin,colbegin用来标识当前圈的开始位置
 		int rowbegin = 0, colbegin = 0;
+		//isEnd标识是否结束，若矩阵为1*n或n*1，需要判断
 		int isEnd = 0;
 		for (int i = 0; i < (circle_times + 1) / 2; i++)
 		{
@@ -498,6 +502,23 @@ public:
 	}
 };
 
+//包含min函数的栈，min()时间复杂度为O（1）
+class Solution20 {
+public:
+	void push(int value) {
+
+	}
+	void pop() {
+
+	}
+	int top() {
+
+	}
+	int min() {
+
+	}
+};
+
 void test19()
 {
 	Solution19 a;
@@ -507,8 +528,6 @@ void test19()
 	{
 		cout << tmp[i] << " ";
 	}
-
-
 }
 
 void test15()
