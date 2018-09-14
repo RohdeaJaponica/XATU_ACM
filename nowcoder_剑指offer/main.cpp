@@ -558,9 +558,35 @@ public:
 	}
 };
 
+//二叉树的层序遍历
 class Solution22 {
 public:
 	vector<int> PrintFromTopToBottom(TreeNode* root) {
+		vector<int> ret;
+		//每次将当前节点的左右子节点入队列，保证层序顺序
+		//根据队列顺序，依次访问
+		deque<TreeNode *> tmp;
+		if (root == NULL) return ret;
+		tmp.push_back(root);
+		while (!tmp.empty())
+		{
+			//当前节点出队列并输出，并将当前节点的左右子树入队列
+			TreeNode * front = tmp.front();
+			ret.push_back(front->val);
+			tmp.pop_front();
+			if (front->left != NULL)
+				tmp.push_back(front->left);
+			if (front->right != NULL)
+				tmp.push_back(front->right);
+		}
+		return ret;
+	}
+};
+
+//二叉搜索树的后序遍历序列
+class Solution23 {
+public:
+	bool VerifySquenceOfBST(vector<int> sequence) {
 
 	}
 };
