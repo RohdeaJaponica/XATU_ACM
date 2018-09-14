@@ -515,7 +515,6 @@ public:
 		if (minNum.top() == s.top())
 			minNum.pop();
 		s.pop();
-
 	}
 	int top() {
 		return s.top();
@@ -526,6 +525,14 @@ public:
 private:
 	stack<int> s;
 	stack<int> minNum;
+};
+
+//栈的压入、弹出序列
+class Solution21 {
+public:
+	bool IsPopOrder(vector<int> pushV, vector<int> popV) {
+
+	}
 };
 
 void test19()
