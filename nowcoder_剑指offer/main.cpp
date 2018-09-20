@@ -588,6 +588,15 @@ class Solution23 {
 public:
 	bool VerifySquenceOfBST(vector<int> sequence) {
 
+		if (sequence.empty()) return 0;
+		int length = sequence.size();
+		vector<int>::iterator end = sequence.end();
+		
+		for (int i = 0; i < length; i++)
+		{
+			if (sequence[i] > *end)	break;
+		}
+
 	}
 };
 
