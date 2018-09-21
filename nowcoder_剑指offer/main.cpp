@@ -590,15 +590,45 @@ public:
 
 		if (sequence.empty()) return 0;
 		int length = sequence.size();
-		vector<int>::iterator end = sequence.end();
-		
-		for (int i = 0; i < length; i++)
+		//vector<int>::iterator end = sequence.end();
+		int left_count = 0;
+		//找左子树，若有大于根节点的 break;
+		for (left_count = 0; left_count < length - 1; left_count++)
 		{
-			if (sequence[i] > *end)	break;
+			if (sequence[left_count] > sequence[length - 1])	break;
 		}
+		int	i = left_count;
+		//右子树种若有小于根节点的，则不满足二叉搜索树，返回假
+		for (; i < length; i++)
+		{
+			if (sequence[i] < sequence[length -1]) return false;
+		}
+		//判断左子树是否为二叉搜索树，再判断右子树是否为二叉搜索树
+		bool left = true;
+		vector<int> left_Child;
+		for (int j = 0; j < left_count; j++)
+			left_Child.push_back(sequence[j]);
+		if (left_count > 0)
+			left = VerifySquenceOfBST(left_Child);
+
+		bool right = true;
+		vector<int> right_Child;
+		for (int j = 0; j < length - i - 2; j++)
+			right_Child.push_back( sequence[j + i]);
+		if (left_count < length - 1)
+			right = VerifySquenceOfBST(right_Child);
+
+		return left && right;
 
 	}
 };
+
+void test23()
+{
+	Solution23 a;
+	vector<int> v = { 5,7,6,9,11,10,8 };
+	cout << a.VerifySquenceOfBST(v);
+}
 
 void test21()
 {
@@ -748,7 +778,8 @@ void test1()
 
 int main()
 {
-	test21();
+	test23();
+	//test21();
 	//test19();
 	//test15();
 	//test14();
