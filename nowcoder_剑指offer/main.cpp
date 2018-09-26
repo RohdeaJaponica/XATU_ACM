@@ -588,7 +588,9 @@ class Solution23 {
 public:
 	bool VerifySquenceOfBST(vector<int> sequence) {
 
-		if (sequence.empty()) return 0;
+		if (sequence.size() == 1) return 1;
+		if (sequence.size() == 0) 
+			return 0;
 		int length = sequence.size();
 		//vector<int>::iterator end = sequence.end();
 		int left_count = 0;
@@ -598,7 +600,7 @@ public:
 			if (sequence[left_count] > sequence[length - 1])	break;
 		}
 		int	i = left_count;
-		//右子树种若有小于根节点的，则不满足二叉搜索树，返回假
+		//右子树中若有小于根节点的，则不满足二叉搜索树，返回假
 		for (; i < length; i++)
 		{
 			if (sequence[i] < sequence[length -1]) return false;
@@ -613,20 +615,19 @@ public:
 
 		bool right = true;
 		vector<int> right_Child;
-		for (int j = 0; j < length - i - 2; j++)
-			right_Child.push_back( sequence[j + i]);
+		for (int j = 0; j < length - left_count - 1; j++)
+			right_Child.push_back( sequence[j + left_count]);
 		if (left_count < length - 1)
 			right = VerifySquenceOfBST(right_Child);
 
 		return left && right;
-
 	}
 };
 
 void test23()
 {
 	Solution23 a;
-	vector<int> v = { 5,7,6,9,11,10,8 };
+	vector<int> v = { 5,7,6,9,11,4,8 };
 	cout << a.VerifySquenceOfBST(v);
 }
 
