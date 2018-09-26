@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <cassert>
 using namespace std;
 //Definition for LinkList
 struct ListNode {
@@ -589,8 +590,7 @@ public:
 	bool VerifySquenceOfBST(vector<int> sequence) {
 
 		if (sequence.size() == 1) return 1;
-		if (sequence.size() == 0) 
-			return 0;
+		if (sequence.size() == 0) return 0;
 		int length = sequence.size();
 		//vector<int>::iterator end = sequence.end();
 		int left_count = 0;
@@ -623,6 +623,90 @@ public:
 		return left && right;
 	}
 };
+
+//二叉树中和为某一值的路径
+class Solution24 {
+public:
+	vector<vector<int> > FindPath(TreeNode* root, int expectNumber) {
+		assert(root != NULL);
+		//没用递归，栈搞得我有点晕，其实就是用栈模拟了递归。
+		//栈s用来先序遍历
+		stack<TreeNode*> s;
+		//栈sum用来保存根节点到某节点得总和
+		stack<int> sum;
+		//栈s_vec保存每个节点得路径
+		stack<vector<int>> s_vec;
+		//v用来返回
+		vector<vector<int>> v; //int count=0;
+		vector<int> v_tmp;
+		TreeNode* p = root;
+		int tmp = 0;
+		while (p != NULL || !s.empty())
+		{
+			//若不为空则一直向左子树遍历，深度优先
+			while (p != NULL)
+			{
+				v_tmp.push_back(p->val); 
+				tmp += p->val;
+				sum.push(tmp);
+				s_vec.push(v_tmp);
+				s.push(p);
+
+				p = p->left;
+			}
+			//若左子树为空
+			if (!s.empty())
+			{
+				//则判断是否为叶子节点，并判断路径和，否则向右子树遍历
+				if (s.top()->right == NULL)
+				{
+					if (sum.top() == expectNumber)
+						v.push_back(s_vec.top());
+				}
+				else
+				p = s.top()->right;
+
+				//遍历过的节点出栈s
+				s.pop();
+				//当前节点路径和设为sum栈顶元素，出栈
+				tmp = sum.top();
+				sum.pop();
+				//路径s_vec栈同理
+				v_tmp = s_vec.top();
+				s_vec.pop();
+			}
+		}
+		return v;
+	}
+};
+
+struct RandomListNode {
+	int label;
+	struct RandomListNode *next, *random;
+	RandomListNode(int x) :
+		label(x), next(NULL), random(NULL) {
+	}
+};
+
+class Solution25 {
+public:
+	RandomListNode * Clone(RandomListNode* pHead)
+	{
+
+	}
+};
+
+void test24()
+{
+	Solution24 a;
+	TreeNode *root = new TreeNode(10);
+	root->left = new TreeNode(5);
+	root->right = new TreeNode(12);
+	root->left->left = new TreeNode(4);
+	root->left->right = new TreeNode(7);
+	vector<vector<int>> v;
+	v = a.FindPath(root, 22);
+}
 
 void test23()
 {
@@ -779,7 +863,8 @@ void test1()
 
 int main()
 {
-	test23();
+	test24();
+	//test23();
 	//test21();
 	//test19();
 	//test15();
