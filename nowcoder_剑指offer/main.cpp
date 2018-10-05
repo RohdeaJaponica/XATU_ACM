@@ -692,9 +692,62 @@ class Solution25 {
 public:
 	RandomListNode * Clone(RandomListNode* pHead)
 	{
+		if (pHead == NULL) return NULL;
+		RandomListNode *p = pHead;
+		RandomListNode *newNode = NULL;
+		RandomListNode *newHead;
+		while (p != NULL)
+		{
+			//在原链表的每个节点后添加新的节点
+			newNode = new RandomListNode(p->label);
+			//新节点的next域指向原节点的下一个节点
+			newNode->next = p->next;
+			//源节点的next域指向新建的节点
+			p->next = newNode;
+			//这样，依次在原节点后添加新节点
 
+			p = newNode->next;
+		}
+		//第二步，复制random域，
+		p = pHead;
+		while (p != NULL)
+		{
+			newNode = p->next;
+			newNode->random = p->random->next;
+			p = newNode->next;
+		}
+		//第三步，拆分两个链表
+		p = pHead;
+		int a = 0;
+		newNode = p->next;
+		newHead = newNode;
+		p->next = newNode->next;
+		p = newHead->next;
+		while (p != NULL)
+		{
+			newNode->next = p->next;
+			newNode = newNode->next;
+			p->next = newNode->next;
+			p = p->next;
+		}
 	}
 };
+
+void test25()
+{
+	Solution25 a;
+	RandomListNode *head = new RandomListNode(1);
+	RandomListNode *node2 = new RandomListNode(2);
+	RandomListNode *node3 = new RandomListNode(3);
+	head->next = node2; node2->next = node3; node3->next = NULL;
+	node3->random = head;
+	node2->random = head;
+	head->random = node3;
+	RandomListNode *newHead = a.Clone(head);
+	
+	return;
+	
+}
 
 void test24()
 {
@@ -863,7 +916,8 @@ void test1()
 
 int main()
 {
-	test24();
+	test25();
+	//test24();
 	//test23();
 	//test21();
 	//test19();
