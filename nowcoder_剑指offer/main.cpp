@@ -695,7 +695,7 @@ public:
 		if (pHead == NULL) return NULL;
 		RandomListNode *p = pHead;
 		RandomListNode *newNode = NULL;
-		RandomListNode *newHead;
+		RandomListNode *newHead = NULL;
 		while (p != NULL)
 		{
 			//在原链表的每个节点后添加新的节点
@@ -713,7 +713,10 @@ public:
 		while (p != NULL)
 		{
 			newNode = p->next;
-			newNode->random = p->random->next;
+			//特别注意，random为空时不能解引用，需加以判断
+			if(p->random != NULL)
+				newNode->random = p->random->next;
+			else newNode->random = NULL;
 			p = newNode->next;
 		}
 		//第三步，拆分两个链表
@@ -730,6 +733,7 @@ public:
 			p->next = newNode->next;
 			p = p->next;
 		}
+		return newHead;
 	}
 };
 
@@ -743,8 +747,22 @@ void test25()
 	node3->random = head;
 	node2->random = head;
 	head->random = node3;
+
+	cout << head->label << "," << head->random->label << endl;
+	cout << head->next->label << "," << head->next->random->label << endl;
+	cout << head->next->next->label << "," << head->next->next->random->label << endl;
+	cout << endl;
 	RandomListNode *newHead = a.Clone(head);
-	
+
+	cout << head->label << "," << head->random->label << endl;
+	cout << head->next->label << "," << head->next->random->label << endl;
+	cout << head->next->next->label << "," << head->next->next->random->label << endl;
+	cout << endl;
+
+	cout << newHead->label << "," << newHead->random->label << endl;
+	cout << newHead->next->label << "," << newHead->next->random->label << endl;
+	cout << newHead->next->next->label << "," << newHead->next->next->random->label << endl;
+	cout << "ok" << endl;
 	return;
 	
 }
