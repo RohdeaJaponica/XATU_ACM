@@ -353,6 +353,9 @@ public:
 		return cur;
 	}
 };
+//这里比较笨，先遍历得到链表长度再查找的。
+//可以直接用两个指针，一个先走K步，然后两个一起走，
+//先走的到尾部时，后走的即倒数第K个。
 
 //逆置链表
 class Solution15 {
@@ -366,11 +369,11 @@ public:
 			pHead = pHead->next;
 			cur->next = reversed;
 			reversed = cur;
-			
 		}
 		return reversed;
 	}
 };
+//摘节点，头插，只改变其next域即可。
 
 //合并两个排序的链表
 class Solution16 {
@@ -413,6 +416,7 @@ public:
 		return newList;
 	}
 };
+//新建一个链表依次判断链接合并即可，像拉链一样
 
 //树的子结构
 class Solution17 {
@@ -445,6 +449,8 @@ public:
 		return ret;
 	}
 };
+//先用HasSubTree依次遍历查找与被查找树根节点相同的节点，
+//然后用DoesTree1HaveTree2判断其左右子树是否相同
 
 //二叉树的镜像
 class Solution18 {
@@ -460,6 +466,7 @@ public:
 			Mirror(pRoot->right);
 	}
 };
+//这个比较简单，左右子树交换，再递归交换其子树的左右子树即可
 
 //顺时针打印矩阵
 class Solution19 {
@@ -502,6 +509,8 @@ public:
 		return ret;
 	}
 };
+//外层循环控制圈数，以行与列中小的一半为准，每层结束后将行列数减一圈
+//内层四个循环控制遍历的方向，右-》下-》左-》上，
 
 //包含min函数的栈，min()时间复杂度为O（1）
 class Solution20 {
@@ -527,6 +536,9 @@ private:
 	stack<int> s;
 	stack<int> minNum;
 };
+//为了实现时间复杂度为O（1）,不能用其他结构保存每次查找最小
+//因此用空间换时间，用一个新的栈保存每个状态下最小的值
+//入栈出栈时判断更新即可
 
 //栈的压入、弹出序列
 class Solution21 {
@@ -558,6 +570,12 @@ public:
 		else return 0;
 	}
 };
+//用一个栈判断即可，几个关键判断条件如下：
+//若入栈序列不为空，且入栈序列当前元素与弹出序列当前元素相同，直接删掉该元素即可，无需进栈
+//若栈不为空，且出栈序列当前元素与栈顶元素相同，出栈，删掉出栈序列当前元素
+//若入站序列不为空，入栈，删除入栈序列当前元素
+//否则，判断结束
+//循环判断结束后，若栈，入栈出栈序列均为空，则可行，否则不可行。
 
 //二叉树的层序遍历
 class Solution22 {
@@ -583,6 +601,10 @@ public:
 		return ret;
 	}
 };
+//队列保存二叉树的节点
+//队尾插入当前节点的左右孩子
+//队首为下一个要遍历的节点
+//即可保证层序遍历
 
 //二叉搜索树的后序遍历序列
 class Solution23 {
@@ -623,6 +645,10 @@ public:
 		return left && right;
 	}
 };
+//在给定的线性表中，最右边是根，
+//从左到最右边的前一个，小于根的是左子树，大于根的为右子树，
+//根据搜索树的性质递归判断左右子树即可
+//要注意线性表为空时返回假
 
 //二叉树中和为某一值的路径
 class Solution24 {
@@ -679,7 +705,9 @@ public:
 		return v;
 	}
 };
+//有点蠢，用栈保存了根到每个节点的路径以及其和，用另一个栈先序遍历
 
+//复杂链表结构
 struct RandomListNode {
 	int label;
 	struct RandomListNode *next, *random;
@@ -688,6 +716,7 @@ struct RandomListNode {
 	}
 };
 
+//复杂链表的复制
 class Solution25 {
 public:
 	RandomListNode * Clone(RandomListNode* pHead)
@@ -736,6 +765,9 @@ public:
 		return newHead;
 	}
 };
+//在每一个原节点后添加新节点以便复制random域，之后拆分即可
+
+
 
 void test25()
 {
